@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>I’m Sorry, Mera Rasgulla ❤️</title>
+<title>I’m Sorry, Mere Rasgulle ❤️</title>
 
 <style>
   body {
@@ -68,6 +68,14 @@
     pointer-events: none;
   }
 
+  .card-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
@@ -87,9 +95,10 @@
 </head>
 
 <body>
+<div class="card-wrapper" id="wrapper">
+  <div class="card" id="card">
 
-<div class="card" id="card">
-  <h1>Mera Rasgulla… are you still mad? 🥺</h1>
+  <h1>Baby… are you mad? 🥺</h1>
   <p>I never want to hurt you. You mean everything to me.</p>
 
   <div class="btn-row">
@@ -98,8 +107,10 @@
   </div>
 
   <div class="hidden-message" id="loveMessage">
-    I love you more than anything in this world. Forever your Rasgulla 🍬❤️
+    I love you more than our childish fights, more than the stars love the night sky.
+    I love you more than anything in this world. Forever yours Babyy 🍬❤️
   </div>
+</div>
 </div>
 
 <audio id="bgMusic" src="love.mp3"></audio>
@@ -109,11 +120,14 @@
   const yesBtn = document.getElementById("yesBtn");
   const music = document.getElementById("bgMusic");
   const card = document.getElementById("card");
+  const wrapper = document.getElementById("wrapper");
 
   const messages = [
     "Are you sure? 🥺",
     "Still mad?? 😭",
-    "Rasgulla please 🍬",
+    "Honey please 🍬",
+    "Ok, I'll buy you chicken bucket 🍗",
+    "That hurts now 😢",
     "Don’t do this 😩",
     "Hehe missed 😜"
   ];
@@ -123,8 +137,10 @@
   let escaped = false;
 
   function moveButton() {
+    yesBtn.style.display = "inline-block";
+
+    // First escape: switch to floating near card
     if (!escaped) {
-      yesBtn.style.display = "inline-block"; // Reveal forgive button
       const rect = noBtn.getBoundingClientRect();
       noBtn.style.position = "fixed";
       noBtn.style.left = rect.left + "px";
@@ -135,23 +151,22 @@
     noBtn.innerText = messages[msgIndex];
     msgIndex = (msgIndex + 1) % messages.length;
 
-    const padding = 12;
     const cardRect = card.getBoundingClientRect();
+    const padding = 20; // distance around card
 
-    const zoneLeft = Math.max(padding, cardRect.left - 80);
-    const zoneRight = Math.min(window.innerWidth - padding, cardRect.right + 80);
-    const zoneTop = Math.max(padding, cardRect.top - 80);
-    const zoneBottom = Math.min(window.innerHeight - padding, cardRect.bottom + 80);
+    // Define area around card (not whole screen)
+    const zoneLeft = cardRect.left - padding;
+    const zoneRight = cardRect.right + padding - noBtn.offsetWidth;
+    const zoneTop = cardRect.top - padding;
+    const zoneBottom = cardRect.bottom + padding - noBtn.offsetHeight;
 
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
-
-    const randomX = Math.random() * (zoneRight - zoneLeft - btnWidth) + zoneLeft;
-    const randomY = Math.random() * (zoneBottom - zoneTop - btnHeight) + zoneTop;
+    const randomX = Math.random() * (zoneRight - zoneLeft) + zoneLeft;
+    const randomY = Math.random() * (zoneBottom - zoneTop) + zoneTop;
 
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
 
+    // Grow forgive button
     yesScale += 0.1;
     if (yesScale > 1.8) yesScale = 1.8;
     yesBtn.style.transform = `scale(${yesScale})`;
@@ -187,6 +202,8 @@
     }
   }
 </script>
+
+
 
 </body>
 </html>
